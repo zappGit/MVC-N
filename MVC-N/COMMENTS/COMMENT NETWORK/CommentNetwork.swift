@@ -12,7 +12,12 @@ class CommentNetwork {
     static func getComment(complition: @escaping(GetCommentResponse) -> ()) {
         guard let url = URL(string: "https://jsonplaceholder.typicode.com/posts/1/comments") else {return}
         Network.shared.getData(url: url) { (json) in
-            
+            do {
+                let response = try GetCommentResponse(json: json)
+                complition(response)
+            } catch {
+                print(error)
+            }
         }
     }
 }
